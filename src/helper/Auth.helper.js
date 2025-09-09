@@ -7,6 +7,7 @@ export const handleLogin = async (email, password, navigate) => {
     toast.error("Please fill all fields");
     return;
   }
+  console.log('API_BASE_URL:', API_BASE_URL);
   try {
     const res = await axios.post(`${API_BASE_URL}/api/user/login`, {
       email,
