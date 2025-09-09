@@ -11,6 +11,8 @@ import {
 } from "@/components/ui/resizable";
 import MobileView4 from "../mobileView/MobileView4";
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
 const TagComponent = () => {
   const { id } = useParams(); 
   const [tagTasks, setTagTasks] = useState([]);
@@ -20,7 +22,7 @@ const TagComponent = () => {
     const userId = localStorage.getItem("userId");
     try {
       const res = await axios.get(
-        `http://localhost:3000/api/tag/getTasksByTag/${id}?userId=${userId}`
+        `${API_BASE_URL}:3000/api/tag/getTasksByTag/${id}?userId=${userId}`
       );
       if (res.status === 200) {
         setTagTasks(res.data.tasks);

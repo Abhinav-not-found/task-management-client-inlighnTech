@@ -1,12 +1,13 @@
 import axios from "axios";
 import { toast } from "sonner";
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 
 export const getMyTasks = async (setMyTasks) => {
   const userId = localStorage.getItem("userId");
   try {
     const res = await axios.get(
-      `http://localhost:3000/api/task/getMyTasks/${userId}`
+      `${API_BASE_URL}/api/task/getMyTasks/${userId}`
     );
     if (res.status === 200) {
       setMyTasks(res.data.data);
@@ -21,7 +22,7 @@ export const handleAddTask = async (name, setName, desc, setDesc, date, priority
 
   const userId = localStorage.getItem("userId");
   try {
-    const res = await axios.post("http://localhost:3000/api/task/add", {
+    const res = await axios.post(`${API_BASE_URL}/api/task/add`, {
       task: name,
       description: desc,
       dueDate: date ? date.toISOString() : null,
@@ -43,7 +44,7 @@ export const handleAddTask = async (name, setName, desc, setDesc, date, priority
     }
   } catch (error) {
     console.log(error);
-    if(error.response && error.response.status === 400){
+    if (error.response && error.response.status === 400) {
       toast.error(error.response.data.message)
     }
   }
@@ -52,7 +53,7 @@ export const handleAddTask = async (name, setName, desc, setDesc, date, priority
 export const handleTrash = async (id, getMyTasks) => {
   try {
     const res = await axios.delete(
-      `http://localhost:3000/api/task/trash/${id}`
+      `${API_BASE_URL}/api/task/trash/${id}`
     );
     if (res.status === 200) {
       toast.success(res.data.message);
@@ -67,7 +68,7 @@ export const handleTrash = async (id, getMyTasks) => {
 export const handleCheck = async (id, setIsChecked, getMyTasks) => {
   try {
     const res = await axios.put(
-      `http://localhost:3000/api/task/toggleTaskCompletion/${id}`
+      `${API_BASE_URL}/api/task/toggleTaskCompletion/${id}`
     );
     if (res.status === 200) {
       toast.success(res.data.message);
@@ -81,7 +82,7 @@ export const handleCheck = async (id, setIsChecked, getMyTasks) => {
 export const handleCheck2 = async (id, getMyTasks) => {
   try {
     const res = await axios.put(
-      `http://localhost:3000/api/task/toggleTaskCompletion/${id}`
+      `${API_BASE_URL}/api/task/toggleTaskCompletion/${id}`
     );
     if (res.status === 200) {
       toast.success(res.data.message);
@@ -97,7 +98,7 @@ export const handleSaveDate = async (id, date, getMyTasks, setOpen) => {
   if (!date) return;
   try {
     const res = await axios.put(
-      `http://localhost:3000/api/task/updateTask/${id}`,
+      `${API_BASE_URL}/api/task/updateTask/${id}`,
       { dueDate: date }
     );
     if (res.status === 200) {
@@ -114,7 +115,7 @@ export const handleSaveDate = async (id, date, getMyTasks, setOpen) => {
 export const handleSetPriority = async (id, newPriority, setPriority, getMyTasks) => {
   try {
     const res = await axios.put(
-      `http://localhost:3000/api/task/updateTask/${id}`,
+      `${API_BASE_URL}/api/task/updateTask/${id}`,
       { priority: newPriority }
     );
     if (res.status === 200) {
@@ -129,7 +130,7 @@ export const handleSetPriority = async (id, newPriority, setPriority, getMyTasks
 export const handleSetPriority2 = async (id, newPriority, getMyTasks) => {
   try {
     const res = await axios.put(
-      `http://localhost:3000/api/task/updateTask/${id}`,
+      `${API_BASE_URL}/api/task/updateTask/${id}`,
       { priority: newPriority }
     );
     if (res.status === 200) {
@@ -146,7 +147,7 @@ export const getSpecificTask = async (taskId, setTaskNotes, setTaskName, setTask
   if (!taskId) return;
   try {
     const res = await axios.get(
-      `http://localhost:3000/api/task/getTask/${taskId}`
+      `${API_BASE_URL}/api/task/getTask/${taskId}`
     );
     if (res.status === 200) {
       setTaskNotes(res.data.data);
@@ -161,7 +162,7 @@ export const getSpecificTask = async (taskId, setTaskNotes, setTaskName, setTask
 export const handleUpdateTask = async (taskId, taskName, taskDescription, setTaskNotes, getMyTasks) => {
   try {
     const res = await axios.put(
-      `http://localhost:3000/api/task/updateTask/${taskId}`,
+      `${API_BASE_URL}/api/task/updateTask/${taskId}`,
       { task: taskName, description: taskDescription }
     );
     if (res.status === 200) {
@@ -207,8 +208,8 @@ export const getUpcomingTasks = (myTasks) =>
 export const deleteAllCompletedTasks = async (setMyTasks) => {
   const userId = localStorage.getItem("userId");
   try {
-    const res = await axios.delete(`http://localhost:3000/api/task/deleteAllCompletedTasks/${userId}`);
-    
+    const res = await axios.delete(`${API_BASE_URL}/api/task/deleteAllCompletedTasks/${userId}`);
+
     toast.success("All completed tasks deleted");
     getMyTasks(setMyTasks);
 
@@ -222,7 +223,7 @@ export const deleteAllCompletedTasks = async (setMyTasks) => {
 export const deleteAllDeletedTasks = async (setMyTasks) => {
   const userId = localStorage.getItem('userId')
   try {
-    await axios.delete(`http://localhost:3000/api/task/deleteAllTrashTasks/${userId}`); 
+    await axios.delete(`${API_BASE_URL}:3000/api/task/deleteAllTrashTasks/${userId}`);
     toast.success("All Trash tasks deleted");
     getMyTasks(setMyTasks);
   } catch (err) {

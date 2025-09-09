@@ -2,6 +2,7 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import TodoElement from "../task/TodoElement";
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 const MobileView4 = () => {
   const { id } = useParams();
@@ -11,7 +12,7 @@ const MobileView4 = () => {
     const userId = localStorage.getItem("userId");
     try {
       const res = await axios.get(
-        `http://localhost:3000/api/tag/getTasksByTag/${id}?userId=${userId}`
+        `${API_BASE_URL}:3000/api/tag/getTasksByTag/${id}?userId=${userId}`
       );
       if (res.status === 200) {
         setTagTasks(res.data.tasks);

@@ -3,8 +3,7 @@ import AddTagComponent from "../tag/AddTagComponent";
 import { ChevronDown, ChevronRight } from "lucide-react";
 import axios from "axios";
 import TagElement from "./TagElement";
-
-// tag on click -> opens a page (similar to dashboard[half-task | half-notes]) -> only see those tasks which are tagged by this....
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 const TagAccordion = () => {
   const [active, setActive] = useState(false);
@@ -16,7 +15,7 @@ const TagAccordion = () => {
     const userId = localStorage.getItem("userId");  
     try {
       const res = await axios.get(
-        `http://localhost:3000/api/tag/getAllTags/${userId}`
+        `${API_BASE_URL}:3000/api/tag/getAllTags/${userId}`
       );
       if (res.status === 200) {
         setTags(res.data);

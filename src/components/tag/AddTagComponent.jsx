@@ -12,6 +12,8 @@ import { useState } from "react";
 import { toast } from "sonner";
 import axios from "axios";
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
 const AddTagComponent = ({ getAllTags }) => {
   const [selectedColor, setSelectedColor] = useState("");
   const [tagName, setTagName] = useState("");
@@ -43,7 +45,7 @@ const AddTagComponent = ({ getAllTags }) => {
     const userId = localStorage.getItem("userId");
 
     try {
-      const res = await axios.post("http://localhost:3000/api/tag/create", {
+      const res = await axios.post(`${API_BASE_URL}/api/tag/create`, {
         name: tagName,
         color: selectedColor || "none",
         userId: userId,

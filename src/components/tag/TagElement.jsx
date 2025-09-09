@@ -41,6 +41,7 @@ const colors = [
     class: "bg-gradient-to-r from-red-500 via-green-500 to-blue-500",
   },
 ];
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 const TagElement = ({ tag, getAllTags }) => {
   const navigate = useNavigate();
@@ -56,7 +57,7 @@ const TagElement = ({ tag, getAllTags }) => {
   const handleDelete = async () => {
     try {
       const res = await axios.delete(
-        `http://localhost:3000/api/tag/delete/${tag._id}`
+        `${API_BASE_URL}:3000/api/tag/delete/${tag._id}`
       );
       if (res.status === 200) {
         getAllTags();
@@ -72,7 +73,7 @@ const TagElement = ({ tag, getAllTags }) => {
     if (!tagName.trim()) return toast.error("Please enter a tag name");
     setLoading(true);
     try {
-      await axios.put(`http://localhost:3000/api/tag/update/${tag._id}`, {
+      await axios.put(`${API_BASE_URL}:3000/api/tag/update/${tag._id}`, {
         name: tagName,
         color: selectedColor,
       });
